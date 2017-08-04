@@ -20,7 +20,7 @@ export default Parent.extend(Evented, {
   //
   // Returns the translation `key` interpolated with `data`
   // in the current `locale`.
-  t(key, data = {}) {
+  t(key, data = {}, loc) {
     Ember.deprecate('locale is a reserved attribute', data['locale'] === undefined, {
       id: 'ember-i18n.reserve-locale',
       until: '5.0.0'
@@ -31,7 +31,7 @@ export default Parent.extend(Evented, {
       until: '5.0.0'
     });
 
-    const locale = this.get('_locale');
+    const locale = loc ? new Locale(loc, getOwner(this)) : this.get('_locale');
     assert("I18n: Cannot translate when locale is null", locale);
     const count = get(data, 'count');
 
